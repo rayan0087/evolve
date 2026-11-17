@@ -37,9 +37,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
     <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white dark:bg-[#121824] border-r border-slate-200 dark:border-slate-800/80 p-4 min-h-screen">
       {/* Brand Logo */}
       <div className="flex items-center gap-3 px-3 py-4 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-white font-black text-xl">
-          DQ
-        </div>
+        <img
+          src="/logo.png"
+          alt="Daily Quest Logo"
+          className="w-10 h-10 rounded-xl object-cover shadow-lg border border-slate-700/40"
+        />
         <div>
           <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white">
             Daily Quest

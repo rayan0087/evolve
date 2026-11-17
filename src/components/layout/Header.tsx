@@ -40,28 +40,35 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#0B0F17]/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 px-4 lg:px-8 py-3.5 transition-colors">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         {/* Left: Greeting & Quote */}
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              {todayStr}
-            </span>
-            <span className="text-slate-300 dark:text-slate-700">•</span>
-            {isOnline ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                <Wifi className="w-3 h-3" /> Online
+        <div className="flex items-center gap-3">
+          <img
+            src="/logo.png"
+            alt="Daily Quest Logo"
+            className="w-10 h-10 rounded-xl md:hidden object-cover shadow-md border border-slate-700/40 shrink-0"
+          />
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                {todayStr}
               </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                <WifiOff className="w-3 h-3" /> Offline (Tersimpan Lokal)
-              </span>
-            )}
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              {isOnline ? (
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                  <Wifi className="w-3 h-3" /> Online
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                  <WifiOff className="w-3 h-3" /> Offline (Tersimpan Lokal)
+                </span>
+              )}
+            </div>
+            <h1 className="text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-0.5">
+              {greeting}, Hero! ⚡
+            </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 italic line-clamp-1 mt-0.5">
+              "{dailyQuote}"
+            </p>
           </div>
-          <h1 className="text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-0.5">
-            {greeting}, Hero! ⚡
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 italic line-clamp-1 mt-0.5">
-            "{dailyQuote}"
-          </p>
         </div>
 
         {/* Right: Gamification Badges & Actions */}

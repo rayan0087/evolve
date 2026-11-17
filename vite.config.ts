@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'icons/*.png'],
+      includeAssets: ['favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'logo.png'],
       manifest: {
         name: 'Daily Quest — Habit Tracker',
         short_name: 'Daily Quest',
