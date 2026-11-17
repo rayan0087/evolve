@@ -271,7 +271,7 @@ export const SettingsPage: React.FC = () => {
 
       {/* 5. App Version Info */}
       <div className="text-center text-xs text-slate-400 pt-4">
-        Daily Quest PWA v1.0.0 • Offline-First & Local-First (IndexedDB / Dexie.js)
+        Daily Quest v1.0.0 • Offline-First & Local-First (IndexedDB / Dexie.js)
       </div>
 
       {/* Import Preview Modal */}

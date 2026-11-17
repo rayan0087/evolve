@@ -47,7 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
             Daily Quest
           </span>
           <span className="block text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
-            Habit Tracker PWA
+            Habit Tracker
           </span>
         </div>
       </div>
