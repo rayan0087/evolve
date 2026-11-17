@@ -32,7 +32,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigateTab }) =
   // Live queries so any DB update reacts immediately
   const liveRecords = useLiveQuery(() => db.daily_records.where('dateKey').equals(todayKey).toArray(), [todayKey]);
   const liveXpTx = useLiveQuery(() => db.xp_transactions.toArray());
-  const liveQuests = useLiveQuery(() => db.quests.filter(q => q.isActive && !q.archivedAt).toArray());
+  const liveQuests = useLiveQuery(() => db.quests.toArray());
 
   // Reload data
   useEffect(() => {

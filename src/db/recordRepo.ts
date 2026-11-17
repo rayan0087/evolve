@@ -17,6 +17,20 @@ export async function getDailyRecordsForDate(
   const recordsToInsert: DailyRecord[] = [];
   const now = new Date().toISOString();
 
+  // Set of currently active quest IDs
+  const activeQuestIds = new Set(activeQuests.map(q => q.id));
+
+  // Automatically clean up any pending/uncompleted records for quests that were deleted or deactivated
+  const recordsToDelete: string[] = [];
+  for (const rec of existingRecords) {
+    if (!activeQuestIds.has(rec.questId) && !rec.isCompleted) {
+      recordsToDelete.push(rec.id);
+    }
+  }
+  if (recordsToDelete.length > 0) {
+    await db.daily_records.bulkDelete(recordsToDelete);
+  }
+
   for (const quest of activeQuests) {
     const existing = recordMap.get(quest.id);
     if (existing) {
@@ -43,13 +57,6 @@ export async function getDailyRecordsForDate(
 
   if (recordsToInsert.length > 0) {
     await db.daily_records.bulkPut(recordsToInsert);
-  }
-
-  // Also include any historical records that might have been for archived quests
-  for (const rec of existingRecords) {
-    if (!recordsToReturn.some(r => r.id === rec.id)) {
-      recordsToReturn.push(rec);
-    }
   }
 
   return recordsToReturn;

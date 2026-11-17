@@ -61,9 +61,21 @@ export async function createQuest(
  */
 export async function updateQuest(id: string, updates: Partial<Quest>): Promise<void> {
   const now = new Date().toISOString();
-  await db.quests.update(id, {
-    ...updates,
-    updatedAt: now
+  await db.transaction('rw', [db.quests, db.daily_records], async () => {
+    await db.quests.update(id, {
+      ...updates,
+      updatedAt: now
+    });
+    if (updates.isActive === false) {
+      const uncompleted = await db.daily_records
+        .where('questId')
+        .equals(id)
+        .filter(r => !r.isCompleted)
+        .toArray();
+      if (uncompleted.length > 0) {
+        await db.daily_records.bulkDelete(uncompleted.map(r => r.id));
+      }
+    }
   });
 }
 
@@ -72,16 +84,38 @@ export async function updateQuest(id: string, updates: Partial<Quest>): Promise<
  */
 export async function archiveQuest(id: string): Promise<void> {
   const now = new Date().toISOString();
-  await db.quests.update(id, {
-    isActive: false,
-    archivedAt: now,
-    updatedAt: now
+  await db.transaction('rw', [db.quests, db.daily_records], async () => {
+    await db.quests.update(id, {
+      isActive: false,
+      archivedAt: now,
+      updatedAt: now
+    });
+    // Remove uncompleted daily records for this quest so it immediately leaves the dashboard
+    const uncompleted = await db.daily_records
+      .where('questId')
+      .equals(id)
+      .filter(r => !r.isCompleted)
+      .toArray();
+    if (uncompleted.length > 0) {
+      await db.daily_records.bulkDelete(uncompleted.map(r => r.id));
+    }
   });
 }
 
 /**
- * Permanently deletes a quest (used in manage quest if desired)
+ * Permanently deletes a quest (used in manage quest)
  */
 export async function deleteQuest(id: string): Promise<void> {
-  await db.quests.delete(id);
+  await db.transaction('rw', [db.quests, db.daily_records], async () => {
+    await db.quests.delete(id);
+    // Remove uncompleted daily records for this deleted quest
+    const uncompleted = await db.daily_records
+      .where('questId')
+      .equals(id)
+      .filter(r => !r.isCompleted)
+      .toArray();
+    if (uncompleted.length > 0) {
+      await db.daily_records.bulkDelete(uncompleted.map(r => r.id));
+    }
+  });
 }
