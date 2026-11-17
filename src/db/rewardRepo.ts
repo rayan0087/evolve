@@ -1,24 +1,7 @@
 import { db } from './index';
 import { Reward, RewardPeriodRecord, RewardStatus } from '../lib/types';
-import { INITIAL_REWARDS } from './seeds';
 import { getPeriodBounds, getLocalDateKey } from '../lib/dateUtils';
 import { getXpForPeriod } from './xpRepo';
-
-/**
- * Seeds default rewards on first startup
- */
-export async function seedInitialRewardsIfEmpty(): Promise<void> {
-  const count = await db.rewards.count();
-  if (count === 0) {
-    const now = new Date().toISOString();
-    const rewardsToInsert: Reward[] = INITIAL_REWARDS.map(r => ({
-      ...r,
-      createdAt: now,
-      updatedAt: now
-    }));
-    await db.rewards.bulkAdd(rewardsToInsert);
-  }
-}
 
 /**
  * Rewards CRUD

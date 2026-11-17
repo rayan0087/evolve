@@ -1,22 +1,5 @@
 import { db } from './index';
 import { Quest } from '../lib/types';
-import { INITIAL_QUESTS } from './seeds';
-
-/**
- * Ensures initial default quests exist on first startup
- */
-export async function seedInitialQuestsIfEmpty(): Promise<void> {
-  const count = await db.quests.count();
-  if (count === 0) {
-    const now = new Date().toISOString();
-    const questsToInsert: Quest[] = INITIAL_QUESTS.map(q => ({
-      ...q,
-      createdAt: now,
-      updatedAt: now
-    }));
-    await db.quests.bulkAdd(questsToInsert);
-  }
-}
 
 /**
  * Returns all active (non-archived) quests sorted by order

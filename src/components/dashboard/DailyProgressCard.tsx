@@ -40,7 +40,7 @@ export const DailyProgressCard: React.FC<DailyProgressCardProps> = ({
               ? '🎉 Luar biasa! Semua quest hari ini telah selesai!'
               : remainingCount > 0
               ? `Tersisa ${remainingCount} quest lagi untuk diselesaikan hari ini.`
-              : 'Belum ada quest aktif.'}
+              : 'Belum ada quest aktif. Tambahkan quest baru di Kelola Quest untuk memulai!'}
           </p>
         </div>
 

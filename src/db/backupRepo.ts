@@ -1,7 +1,5 @@
 import { db } from './index';
 import { BackupData } from '../lib/types';
-import { seedInitialQuestsIfEmpty } from './questRepo';
-import { seedInitialRewardsIfEmpty } from './rewardRepo';
 
 export const CURRENT_BACKUP_VERSION = 1;
 
@@ -174,7 +172,4 @@ export async function factoryResetAllData(): Promise<void> {
       db.app_settings.clear()
     ]);
   });
-
-  await seedInitialQuestsIfEmpty();
-  await seedInitialRewardsIfEmpty();
 }

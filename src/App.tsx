@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from './db/index';
-import { seedInitialQuestsIfEmpty } from './db/questRepo';
-import { seedInitialRewardsIfEmpty } from './db/rewardRepo';
 import { getUserProgression } from './db/statsRepo';
 import { useTheme } from './hooks/useTheme';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
@@ -22,11 +20,9 @@ export const App: React.FC = () => {
   const isOnline = useOnlineStatus();
   const [progression, setProgression] = useState<Awaited<ReturnType<typeof getUserProgression>> | null>(null);
 
-  // Initialize DB seeds on startup
+  // Initialize progression stats on startup
   useEffect(() => {
     async function initDb() {
-      await seedInitialQuestsIfEmpty();
-      await seedInitialRewardsIfEmpty();
       const prog = await getUserProgression();
       setProgression(prog);
     }
